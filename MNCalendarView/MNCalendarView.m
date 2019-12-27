@@ -357,12 +357,6 @@
     
     [cell.titleLabel setAccessibilityIdentifier:isEnable ? [_accessibilityDateFormatter stringFromDate:date] : nil];
 
-    NSString *identifier = [NSString stringWithFormat:@"%@.%@",
-                            _accessibilityDomain,
-                            [_accessibilityDateFormatter stringFromDate:date]];
-    [cell setAccessibilityIdentifier:identifier];
-    [cell setAccessibilityLabel:identifier];
-
     if (isEnable) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
@@ -370,6 +364,14 @@
             [cell setToday:YES];
         }
         [cell setEnabled:[self dateEnabled:date]];
+    }
+
+    if (cell.enabled) {
+        NSString *identifier = [NSString stringWithFormat:@"%@.%@",
+                                _accessibilityDomain,
+                                [_accessibilityDateFormatter stringFromDate:date]];
+        [cell setAccessibilityIdentifier:identifier];
+        [cell setAccessibilityLabel:identifier];
     }
     
     [cell setSelected:NO];
