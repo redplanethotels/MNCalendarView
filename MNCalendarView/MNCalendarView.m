@@ -365,14 +365,6 @@
         }
         [cell setEnabled:[self dateEnabled:date]];
     }
-
-    if (cell.enabled) {
-        NSString *identifier = [NSString stringWithFormat:@"%@.%@",
-                                _accessibilityDomain,
-                                [_accessibilityDateFormatter stringFromDate:date]];
-        [cell setAccessibilityIdentifier:identifier];
-        [cell setAccessibilityLabel:identifier];
-    }
     
     [cell setSelected:NO];
     [cell setHighlighted:NO];
@@ -393,6 +385,17 @@
             [date compare:self.endDate] == NSOrderedAscending) {
             [cell setHighlighted:YES];
         }
+    }
+
+    if (cell.enabled) {
+        NSString *identifier = [NSString stringWithFormat:@"%@.%@",
+                                _accessibilityDomain,
+                                [_accessibilityDateFormatter stringFromDate:date]];
+        [cell setAccessibilityIdentifier:identifier];
+        [cell setAccessibilityLabel:identifier];
+    } else {
+        [cell setAccessibilityIdentifier:nil];
+        [cell setAccessibilityLabel:nil];
     }
 
     return cell;
